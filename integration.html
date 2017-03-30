@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>title</title>
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '250790455391863',
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "http://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</head>
+<body>
+<button type="button" onclick="getToken();">Get new token</button>
+<br/>
+<br/>
+<button type="button" onclick="submit();">Post to page</button>
+<input id="message" type="text" name="message">
+<br/>
+<br/>
+<textarea rows="30" cols="200" id="log"></textarea>
+<br/>
+<br/>
+<a href="#" id="facebook-post">Link to Facebook post</a>
+</body>
+
+<script>
+    var pageId = 369900970076851;
+    var token = "EAADkF7QBtncBAMwaxG7xEZA4DX9tUugwCqPjypgcDK7ehnKcMfSLPKFy4GXDEeQoSeyvZAL4ZB5MECIZAz71Fb0kZB3R29vCtZB06O7Rt0i3yrZBWo3hKdrZB3Reotue9sBVMZAkJdo5L1FA3IejjbZBNFlIsXmoWcyDhqZBB36Kj1gtUeZBLZBDGI05j";
+
+    function getToken() {
+        FB.api(
+            "/" + pageId + "?fields=access_token",
+            "GET",
+            {
+                "access_token" : token
+            },
+            function (response) {
+                console.debug(response);
+                document.getElementById("log").value = JSON.stringify(response);
+            }
+        );
+    }
+
+    function submit() {
+        var message = document.getElementById("message").value;
+        FB.api(
+            "/" + pageId + "/feed",
+            "POST",
+            {
+                "message": message,
+                "access_token" : token
+            },
+            function (response) {
+                console.debug(response);
+                document.getElementById("log").value = JSON.stringify(response);
+                var postId = response.id.substring(response.id.indexOf("_") + 1);
+                document.getElementById("facebook-post").href = "http://www.facebook.com/" + pageId +"/posts/" + postId;
+            }
+        );
+    }
+</script>
+</html>
