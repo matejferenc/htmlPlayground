@@ -1,0 +1,14 @@
+CLIENT:
+1)	Navigate to your facebook account and from the left bottom part of the page you can create a new page.
+(https://www.facebook.com/pages/create/?ref_type=bookmark)
+2)	Go to Page Seetings -> Page Roles -> add a new “Editor” via Your admin email (Admin of the Your FB app)
+
+MONSTER:
+1)	After being assigned as an editor of the client’s page navigate to FB developers console 
+2)	Select Your app from the Application dropdown (top right of the page)
+3)	Select Client’s page in the dropdown bellow Your app (next to the “Access Token” input field) => new short term access token is generated
+4)	https://graph.facebook.com/v2.8/oauth/access_token?grant_type=fb_exchange_token&client_id={app_id}&client_secret={app_secret}&fb_exchange_token={short_lived_token}
+a.	App_id – Your app Id
+b.	App_secret – Your app secret
+c.	Short_lived_token – token obtained from the step 3
+5)	Hurray, you’ve generated your new non-expiring access token
